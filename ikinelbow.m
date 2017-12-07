@@ -41,13 +41,17 @@ d1 = d(1);
 d4 = d(2);
 d_tool = d(3);
 
+d6_tool = [0; 0; d_tool]
+
 % Get the values from a
 a1 = a(1);
 a2 = a(2);
 
 % 1. Solve for Theta 1
+d6_tool = [0; 0; d_tool]
 R0_6 = Rw_0.' * Rw_tool
-d0_6 = (dw_tool.' * Rw_0) - (dw_0.' * Rw_0) - d_tool*(Rw_0.' *  Rw_tool).'
+%d0_6 = (dw_tool.' * Rw_0) - (dw_0.' * Rw_0) - dw_tool.'*(Rw_0.' *  Rw_tool).'
+d0_6 = (Rw_0.' * dw_tool) - (Rw_0.' * dw_0) - (R0_6 * d6_tool)
 d0_4 = d0_6
 
 x0_4 = d0_4(1)
@@ -59,16 +63,16 @@ theta_1 = atan2(y0_4, x0_4)
 % 2. Solve for Theta 3
 
 d1_4 = [cos(theta_1)*(x0_4-a1*cos(theta_1)) + (sin(theta_1)*(y0_4 - a1*sin(theta_1))) ...
-	-(z0_4 - d1) ...
-	-sin(theta_1)*(x0_4 - a1 * cos(theta_1)) + cos(theta_1)*(y0_4 - a1 * sin(theta_1))]
+        -(z0_4 - d1) ...
+        -sin(theta_1)*(x0_4 - a1 * cos(theta_1)) + cos(theta_1)*(y0_4 - a1 * sin(theta_1))]
 
-x1_4 = (1)
-y1_4 = (2)
-z1_4 = (3)
+x1_4 = d1_4(1)
+y1_4 = d1_4(2)
+z1_4 = d1_4(3)
 
-th_3num = (a2+d4)^2 - sqrt((x1_4^2+y1_4^2))
-th_3den = sqrt((x1_4^2 +y1_4^2))+(-a2-d4)^2
-theta_3 = -2*atan(sqrt(th_3num/th_3den)) % Elbow down
+th_3num = (a2+d4)^2 -(x1_4^2+y1_4^2)
+th_3den = (x1_4^2 +y1_4^2)-(a2-d4)^2
+theta_3 = 2*atan(sqrt(th_3num/th_3den)) % Elbow down
 % theta_3 = .395
 % 3. Solve for Theta 2
 
