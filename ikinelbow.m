@@ -51,7 +51,8 @@ a2 = a(2);
 d6_tool = [0; 0; d_tool]
 R0_6 = Rw_0.' * Rw_tool
 %d0_6 = (dw_tool.' * Rw_0) - (dw_0.' * Rw_0) - dw_tool.'*(Rw_0.' *  Rw_tool).'
-d0_6 = (Rw_0.' * dw_tool) - (Rw_0.' * dw_0) - (R0_6.' * d6_tool)
+%d0_6 = (Rw_0.' * dw_tool) - (Rw_0.' * dw_0) - (R0_6.' * d6_tool)
+d0_6 = Rw_0 * (dw_tool - dw_0 - Rw_tool.'*d6_tool)
 d0_4 = d0_6
 
 x0_4 = d0_4(1)
